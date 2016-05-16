@@ -1,7 +1,7 @@
 <?php if(!defined('KIRBY')) exit ?>
 
 username: eef
-firstname: ""
+firstname: Eveline
 lastname: ""
 email: loena101@hotmail.com
 password: >
