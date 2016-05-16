@@ -1,21 +1,17 @@
-Title: Interaction Museum
+Title: Trip
 
 ----
 
-Authors: By Diana & Isha
+Description: A travel blog for our world trip.
 
 ----
 
-Description: An online collection of interaction techniques.
+Keywords: kirby,world,trip
 
 ----
 
-Keywords: Kirby,CMS,file-based
+Copyright: 
 
 ----
 
-Copyright: © 2016 (link: http://www.inria.fr/ text: Inria)
-
-----
-
-Source Code: (link: https://github.com/IshavanBaar/interaction-museum)
+Author: 

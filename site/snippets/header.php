@@ -12,11 +12,12 @@
 
         <!-- MODERNIZER FOR OLD BROWSERS -->	
         <?php echo js('assets/js/lib/modernizr-2.8.3-respond-1.4.2.min.js') ?>
-
+        
+        <!-- Jquery, bootstrap, and main js -->
         <?php echo js(array(
             'assets/js/lib/jquery-1.12.3.js',
             'assets/js/lib/bootstrap.min.js',
-            'assets/js/main.js',
+            'assets/js/main.js'
         ))?>
     </head>
 
