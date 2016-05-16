@@ -1,0 +1,66 @@
+Info: 
+
+----
+
+Name: Crossing
+
+----
+
+Description: Crossing is an alternative to pointing and clicking. By crossing, a user moves the cursor beyond the boundary of a targeted graphical object to select it.
+
+----
+
+Tags: Fitts' law,crossing,pointing
+
+----
+
+Header-image: crossing.jpg
+
+----
+
+Trade-off-image: crossing_example.jpg
+
+----
+
+Try-out: 
+
+----
+
+Related-page: recently-added/marking-menu
+
+----
+
+Related-publications: 
+
+- 
+  title: "Beyond Fitts' law: models for trajectory-based HCI tasks"
+  link: >
+    https://portail.saclay.inria.fr/,DanaInfo=dl.acm.org+citation.cfm?id=258760
+  type: Proceedings of CHI 1997
+  authors: Johnny Accot, Shumin Zhai
+  year: "1997"
+- 
+  title: >
+    More than dotting the i’s —
+    Foundations for crossing-based
+    interfaces
+  link: 'https://www.researchgate.net/publication/2515900_More_than_dotting_the_i%27s_-_Foundations_for_crossing-based_interfaces'
+  type: Proceedings of CHI 2002
+  authors: Johnny Accot, Shumin Zhai
+  year: "2002"
+- 
+  title: >
+    Foundations for Designing and Evaluating
+    User Interfaces Based on the Crossing
+    Paradigm
+  link: >
+    http://www.cs.cornell.edu/~francois/Papers/CrossY_TOCHI11.pdf
+  type: ACM Transactions
+  authors: >
+    Georg Apiz, François Guimbretière,
+    Shumin Zhai
+  year: "2008"
+
+----
+
+Title: Crossing

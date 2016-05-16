@@ -1,0 +1,21 @@
+Title: Interaction Museum
+
+----
+
+Authors: By Diana & Isha
+
+----
+
+Description: An online collection of interaction techniques.
+
+----
+
+Keywords: Kirby,CMS,file-based
+
+----
+
+Copyright: © 2016 (link: http://www.inria.fr/ text: Inria)
+
+----
+
+Source Code: (link: https://github.com/IshavanBaar/interaction-museum)

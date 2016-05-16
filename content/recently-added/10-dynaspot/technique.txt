@@ -1,0 +1,47 @@
+Info: 
+
+----
+
+Name: DynaSpot
+
+----
+
+Description: DynaSpot is a combination of two pointing techniques. It behaves like a point cursor at low speed and like an area selector at higher speeds. Thus it can select with precision while still making selection faster over long distances. It outperforms the point cursor and has a similar performance level to the Bubble cursor.
+
+----
+
+Tags: area cursor,Fitts’ Law,pointing
+
+----
+
+Header-image: dynaspot.jpg
+
+----
+
+Trade-off-image: dynaspot_anatomy.jpg
+
+----
+
+Try-out: 
+
+----
+
+Related-page: recently-added/bubble-cursor
+
+----
+
+Related-publications: 
+
+- 
+  title: 'DynaSpot: Speed-Dependent Area Cursor'
+  link: >
+    https://hal.archives-ouvertes.fr/file/index/docid/373678/filename/chi2009_dynaspot.pdf
+  type: "Proceedings CHI '09"
+  authors: >
+    Olivier Chapuis, Jean-Baptiste Labrune,
+    Emmanuel Pietriga
+  year: "2009"
+
+----
+
+Title: DynaSpot

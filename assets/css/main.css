@@ -1,0 +1,81 @@
+/* Header image*/
+#header_image {
+	margin-bottom: 1.5em; 
+}
+
+footer {
+	background-color: #D3D3D3;
+}
+
+/* Navbar */
+.navbar-brand>img {
+	max-height: 100%;
+}
+
+/* Text blocks */
+.text img {
+	max-width: 100%;
+}
+
+/* Container  */
+.container-fluid{
+	max-width: 1490px;
+}
+
+/* Links */
+a:hover{
+	text-decoration: none;
+}
+
+/* Technique cards  */
+.thumbnail {
+    border: none;
+}
+
+.thumbnail .caption{
+	background: #F2F1EF;
+	font-size: 1.5em;
+	color: #bf3e11;
+	text-align: center;
+}
+
+/* TODO what is still used? */
+.technique-img{
+	display: block;
+}
+
+.label{
+	font-size: 1em;
+}
+
+/* Search */
+#search-bar{
+	margin-bottom: 20px;
+}
+
+/* Technique */
+.trade-img{
+	display: block;
+	margin: 1.5em 0;
+}
+.tags{
+	padding: 0 15px;
+}
+ h2{
+ 	font-size: 26px;
+ }
+ 
+/* Publications */
+.publication{
+	padding: 0.5em 0;
+}
+.publication h3{
+	margin: 0;
+	font-size: 20px;
+}
+
+@media (min-width: 1240px) {
+	.thumbnail a > img{
+		min-height: 260px;
+	}
+}

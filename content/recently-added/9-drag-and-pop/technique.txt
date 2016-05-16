@@ -1,0 +1,45 @@
+Info: 
+
+----
+
+Name: Drag-and-Pop
+
+----
+
+Description: Drag-and-pop is an extension of traditional drag-and-drop. As the user starts dragging an icon towards a target, drag-and-pop moves potential targets close to the cursor. This results in smaller hand movements.
+
+----
+
+Tags: drag-and-drop,pen input,touch screen
+
+----
+
+Header-image: drag_and_pop.jpg
+
+----
+
+Trade-off-image: 
+
+----
+
+Try-out: http://www.patrickbaudisch.com/projects/dragandpop/demo/dragandpop.swf
+
+----
+
+Related-page: recently-added/
+
+----
+
+Related-publications: 
+
+- 
+  title: 'Drag-and-Pop and Drag-and-Pick: techniques for accessing remote screen content on touch- and pen-operated systems'
+  link: >
+    http://www.patrickbaudisch.com/publications/2003-Baudisch-Interact03-DragAndPop.pdf
+  type: Proceedings of Interact 2003
+  authors: 'Patrick Baudisch, Edward Cutrell, Dan Robbins, Mary Czerwinski, Peter Tandler, Benjamin Bederson,  Alex Zierlinger'
+  year: "2003"
+
+----
+
+Title: Drag-and-Pop

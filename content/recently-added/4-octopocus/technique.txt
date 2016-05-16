@@ -1,0 +1,56 @@
+Info: 
+
+----
+
+Name: 
+
+----
+
+Title: OctoPocus
+
+----
+
+Description: OctoPocus is a gesture learning technique. During a stroke gesture, it shows where you have been, and where you can go next for a recognizable gesture.
+
+----
+
+Tags: dynamic guides,feedback,feedforward,mouse input,pen input
+
+----
+
+Header-image: octopocus.jpg
+
+----
+
+Trade-off-image: comparison.jpg
+
+----
+
+Try-out: 
+
+----
+
+Related-page: 
+
+----
+
+Related-publications: 
+
+- 
+  title: >
+    A Dynamic Guide for Learning
+    Gesture-Based Command Sets
+  link: >
+    https://www.lri.fr/~mbl/Stanford/CS477/papers/Octopocus-UIST2008.pdf
+  type: UIST Proceedings
+  authors: Olivier Bau, Wendy E. Mackay
+  year: "2008"
+- 
+  title: >
+    Scale Detection for a priori Gesture
+    Recognition
+  link: >
+    https://www.lri.fr/~appert/website/papers/sd.pdf
+  type: CHI Proceedings
+  authors: Caroline Appert, Olivier Bau
+  year: "2010"
