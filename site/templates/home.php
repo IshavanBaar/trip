@@ -9,5 +9,7 @@
         <!-- MAPS scripts -->
         <?php echo js('https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyBSRXd-KxP4MMM04uSk3kpO-72q380UBAc', true) ?>
         <?php echo js('assets/js/maps.js') ?>
+        
+        <?php snippet('blogs') ?>
     </body>
 </html>

@@ -35,6 +35,8 @@ var contentString =
 /* -------------------- INITIALIZING MAP ------------------------- */
 
 function initMap() {
+   // reqListener();
+    
     // TODO select with jquery.
     var mapDiv = document.getElementById('map');
 
@@ -51,12 +53,15 @@ function initMap() {
 /* -------------------- ADDING MARKERS TO THE MAP ------------------------- */
 
 function drop() {
-    for (var i = 0; i < locations.length; i++) {
-        addMarkerWithTimeout(locations[i], i * 1000);
-    }
+    $('.infowindow').each(function(index, value){
+        var clone = $(this).clone().css('display','inline-block');
+        console.log(clone.html());
+        var infowindowContent = $('<div/>').append(clone).html();
+        addMarkerWithTimeout(locations[index], index * 1000, infowindowContent);
+    });
 }
 
-function addMarkerWithTimeout(position, timeout) {
+function addMarkerWithTimeout(position, timeout, infowindowContent) {
     window.setTimeout(function() {
         var marker = new google.maps.Marker({
             position: position,
@@ -66,7 +71,7 @@ function addMarkerWithTimeout(position, timeout) {
         
         // Adding info window
         var infowindow = new google.maps.InfoWindow({
-            content: contentString
+            content: infowindowContent
         });
         
         marker.addListener('click', function() {
@@ -76,4 +81,3 @@ function addMarkerWithTimeout(position, timeout) {
         markers.push(marker);
     }, timeout);
 }
-
