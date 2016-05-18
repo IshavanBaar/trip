@@ -12,6 +12,9 @@ fields:
     label: Main Image
     type: image
     required: true
+  user:
+    label: Author
+    type: currentuser
   blog:
     label: Write your blog here
     type:  textarea

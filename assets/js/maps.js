@@ -35,7 +35,6 @@ var contentString =
 /* -------------------- INITIALIZING MAP ------------------------- */
 
 function initMap() {
-   // reqListener();
     
     // TODO select with jquery.
     var mapDiv = document.getElementById('map');
