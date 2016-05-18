@@ -1,6 +1,0 @@
-Title: Account
-
-----
-
-Text: Welcome to your account. 
-

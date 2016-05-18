@@ -12,17 +12,19 @@ foreach($blogs as $blog):
     <!-- INFO WINDOW -->
     <div class="infowindow" style="display: none;">
         <div id="siteNotice"></div>
+        
+        <!-- MAIN IMAGE AND TITLE -->
+        <img src="<?php echo $blog_main_image ?>" alt="">
+        
+        <!-- TITLE (now link) -->
         <a href="<?php echo $blog_url ?>">
-            <!-- MAIN IMAGE AND TITLE -->
-            <img src="<?php echo $blog_main_image ?>" alt="">
             <h2 class="caption"><?php echo $blog_title ?></h2>
-            
-            <!-- MAIN CONTENT -->
-            <div id="bodyContent">
-                <p><?php echo $blog_text; ?></p>
-            </div>
         </a>
         
+        <!-- MAIN CONTENT -->
+        <div id="bodyContent">
+            <p><?php echo $blog_text; ?></p>
+        </div>
 
     </div>
 

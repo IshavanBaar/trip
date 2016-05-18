@@ -10,8 +10,7 @@ fields:
     required: true
   main-image:
     label: Main Image
-    type: select
-    options: images
+    type: image
     required: true
   blog:
     label: Write your blog here
