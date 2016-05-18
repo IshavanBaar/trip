@@ -45,18 +45,6 @@ c::set('roles', array(
   )
 ));
 
-// When logout URL is opened, call logout action method. 
-c::set('routes', array(
-  array(
-    'pattern' => 'logout',
-    'action'  => function() {
-      if($user = site()->user()) $user->logout();
-      // Goes to home page now, but can be set to login.
-	  go('/');
-    }
-  )
-));
-
 /*
 
 ---------------------------------------
