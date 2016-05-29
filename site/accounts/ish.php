@@ -11,3 +11,4 @@ role: admin
 history:
   - blogs/in-the-plane
   - blogs/another-blog
+  - blogs/test

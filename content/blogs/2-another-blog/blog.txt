@@ -17,3 +17,19 @@ Let's check out some pics!
 ----
 
 User: eef
+
+----
+
+Location: 
+
+address: melbourne
+lat: -37.814107
+lng: '144.96328'
+
+----
+
+Date: 2016-05-27
+
+----
+
+Written-on: 2016-05-25

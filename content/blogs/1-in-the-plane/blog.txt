@@ -28,3 +28,19 @@ Now, here are some pictures already! *Enjoy!*
 ----
 
 User: ish
+
+----
+
+Location: 
+
+address: great barrier reef
+lat: -16.4472837
+lng: 145.8173498
+
+----
+
+Date: 2016-05-26
+
+----
+
+Written-on: 2016-05-17
