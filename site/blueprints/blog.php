@@ -16,3 +16,18 @@ fields:
     label: Write your blog here
     type:  textarea
     required: true
+  user:
+    label: Author
+    type: currentuser
+    required: true
+  date:
+    label: Date
+    type: date
+    default: today
+    required: true
+  location:
+    label: Location
+    type: place
+    required: true
+    help: >
+      Move the pin wherever you'd like, or search for a location!

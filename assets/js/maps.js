@@ -1,77 +1,66 @@
+/* -------------------- INITIALIZING VARIABLES & STYLE ----------- */
 var map;
-
-var locations = [
-    {lat: 52.511, lng: 13.447},
-    {lat: 52.497, lng: 13.396},
-    {lat: 52.517, lng: 13.394},
-    {lat: 52.549, lng: 13.422},
-];
-
 var markers = [];
+var prevPosition = {};
+var curPosition = {};
 
-var contentString = 
-    '<div id="content">'+
-        '<div id="siteNotice">'+'</div>'+
-        '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-        '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-            'sandstone rock formation in the southern part of the '+
-            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-            'south west of the nearest large town, Alice Springs; 450&#160;km '+
-            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-            'Aboriginal people of the area. It has many springs, waterholes, '+
-            'rock caves and ancient paintings. Uluru is listed as a World '+
-            'Heritage Site.</p>'+
-            
-            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-            '(last visited June 22, 2009).</p>'+
-        '</div>'+
-    '</div>';
-
+// Style from https://snazzymaps.com/style/8409/white-and-black
+var mapStyle = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"weight":"2.05"},{"color":"#ffffff"}]},{"featureType":"administrative.country","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#6f6f6f"}]},{"featureType":"administrative.country","elementType":"labels.text","stylers":[{"weight":"1"}]},{"featureType":"administrative.country","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"administrative.province","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.neighborhood","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"simplified"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":17},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]}];
+ 
 
 /* -------------------- INITIALIZING MAP ------------------------- */
 
 function initMap() {
-   // reqListener();
     
     // TODO select with jquery.
     var mapDiv = document.getElementById('map');
 
     // Map
     map = new google.maps.Map(mapDiv, {
-      center: {lat: 52.497, lng: 13.396},
-      zoom: 12
+      // TODO set center dynamically 
+      center: {lat: -16.4472837, lng: 145.8173498}, // Great Barrier Reef
+      zoom: 4,
+      styles: mapStyle
     }); 
     
     // Some delay before the map has been loaded.
     window.setTimeout(drop, 3000);
 }
 
-/* -------------------- ADDING MARKERS TO THE MAP ------------------------- */
+/* -------------------- ADDING MARKERS TO THE MAP ------------------ */
 
 function drop() {
     $('.infowindow').each(function(index, value){
+        // Get the HTML content with a clone
         var clone = $(this).clone().css('display','inline-block');
-        console.log(clone.html());
         var infowindowContent = $('<div/>').append(clone).html();
-        addMarkerWithTimeout(locations[index], index * 1000, infowindowContent);
+        
+        // Search for user avatar
+        var markerIcon = clone.find('.user_avatar').css('display','inline-block').attr('src');
+        
+        // Search for positions
+        var latitude = clone.find('.lat').text();
+        var longitude = clone.find('.lng').text();
+        var position = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
+        
+        addMarkerWithTimeout(position, index * 1000, infowindowContent, markerIcon);
     });
 }
 
-function addMarkerWithTimeout(position, timeout, infowindowContent) {
+function addMarkerWithTimeout(position, timeout, infowindowContent, markerIcon) {
     window.setTimeout(function() {
+    
+        // Add info window
+        var infowindow = new google.maps.InfoWindow({
+            content: infowindowContent
+        });
+        
+        // Add marker
         var marker = new google.maps.Marker({
             position: position,
             map: map,
+            icon : markerIcon,
             animation: google.maps.Animation.DROP
-        });
-        
-        // Adding info window
-        var infowindow = new google.maps.InfoWindow({
-            content: infowindowContent
         });
         
         marker.addListener('click', function() {
@@ -79,5 +68,35 @@ function addMarkerWithTimeout(position, timeout, infowindowContent) {
         });
         
         markers.push(marker);
+        
+        // Add line segment
+        curPosition = position;
+        
+        // TODO make it also appear gradually
+        if (!$.isEmptyObject(prevPosition)) {
+            var lineSymbol = {
+              path: 'M 0,-1 0,1',
+              geodesic: true,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1,
+              scale: 4
+            };
+            
+            var route = new google.maps.Polyline({
+                path: [prevPosition, curPosition],
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0,
+                
+                icons: [{
+                    icon: lineSymbol,
+                    offset: '0',
+                    repeat: '20px'
+                }]
+            });
+            route.setMap(map);
+        }
+        prevPosition = curPosition;
+
     }, timeout);
 }

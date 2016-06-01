@@ -13,3 +13,23 @@ It's great here in Indonesia. The people are warm. The food is delicious. All th
 ## Bali
 Let's check out some pics!
 (image: img_7791.jpg)
+
+----
+
+User: eef
+
+----
+
+Location: 
+
+address: melbourne
+lat: -37.814107
+lng: '144.96328'
+
+----
+
+Date: 2016-05-27
+
+----
+
+Written-on: 2016-05-25
