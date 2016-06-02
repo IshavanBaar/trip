@@ -24,18 +24,9 @@ function initMap() {
       styles: mapStyle
     }); 
     
-
-    // Sizes of infowindow.
-    var width = $('#infowindow_measure').width();
-    var height = $('#map').height() - 500; // TODO find better height
-    
     // Info window
-    infowindow = new google.maps.InfoWindow({
-            width : width,    
-            height: height,
-            pixelOffset: new google.maps.Size(width/2, height/2),
-            zIndex: 1
-    });
+    infowindow = new google.maps.InfoWindow();
+    changeInfoWindowStyle();
     
     // Some delay before the map has been loaded.
     window.setTimeout(drop, 3000);
@@ -75,7 +66,7 @@ function addMarkerWithTimeout(position, timeout, infowindowContent, markerIcon) 
         // Add info window on click event
         marker.addListener('click', function() {
             infowindow.setContent(infowindowContent);
-            infowindow.open(map, marker);
+            infowindow.open(map);
         });
   
         markers.push(marker);
@@ -110,4 +101,46 @@ function addMarkerWithTimeout(position, timeout, infowindowContent, markerIcon) 
         prevPosition = curPosition;
 
     }, timeout);
+}
+
+function changeInfoWindowStyle() {
+    /*
+     * The google.maps.event.addListener() event waits for
+     * the creation of the infowindow HTML structure 'domready'
+     * and before the opening of the infowindow defined styles
+     * are applied.
+     */
+    google.maps.event.addListener(infowindow, 'domready', function() {
+        var iwOuter = $('.gm-style-iw');
+        var iwBackground = iwOuter.prev();
+
+        // Remove the background shadow DIV
+        iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+        // Remove the white background DIV
+        iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+        
+        // Removes the shadow of the arrow
+        iwBackground.children(':nth-child(1)').css({'display' : 'none'});
+
+        // Removes the arrow 
+        iwBackground.children(':nth-child(3)').css({'display' : 'none'});
+        
+        // Reposition and style close button
+        var iwCloseBtn = iwOuter.next();
+        iwCloseBtn.css({
+          //opacity: '1', // by default the close button has an opacity of 0.7
+          right: '80px', top: '3px', // button repositioning
+          //border: '7px solid #48b5e9', // increasing button border and new color
+          //'border-radius': '13px', // circular effect
+          //'box-shadow': '0 0 5px #3990B9' // 3D effect to highlight the button
+          });
+
+        // The API automatically applies 0.7 opacity to the button after the mouseout event.
+        // This function reverses this event to the desired value.
+        iwCloseBtn.mouseout(function(){
+          //$(this).css({opacity: '1'});
+        });
+
+    });
 }
