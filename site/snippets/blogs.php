@@ -26,9 +26,9 @@ foreach($blogs as $blog):
     $blog_avatar = kirby()->urls()->avatars() . "/" . $blog->user()->avatar() . ".png";
     $blog_url = $blog->url();
 
-    $blog_title = $blog->title()->html();
+    $blog_title = strtoupper($blog->title()->html());
     $blog_main_image = $blog->image((string)$blog->main_image())->url();
-    $blog_text = $blog->blog()->kirbytext()->excerpt(300); //now takes excerpt of first 300 chars.
+    $blog_text = $blog->blog()->kirbytext(); //->excerpt(300); //for excerpt of first 300 chars.
 
     $blog_author = $blog->user();
     $blog_date_c = $blog->date('c');
@@ -42,31 +42,33 @@ foreach($blogs as $blog):
 ?>
     
     <!-- Fill the info window -->
-    <div class="infowindow" style="display: none;">  
+    <div class="infowindow-content" style="display: none;">  
         <!-- Main Image -->
         <img src="<?php echo $blog_main_image ?>" alt="">
         
-        <!-- Title, URL -->
-        <a href="<?php echo $blog_url ?>">
-            <h2 class="caption"><?php echo $blog_title ?></h2>
-        </a>
-        
-        <!-- User Avatar Image (won't be displayed, but needs to be first img here --> 
-        <img class="user_avatar" src="<?php echo $blog_avatar ?>" alt="" style="display: none;">
-        
-        <!-- Author and Date -->
-        <p><?php echo $blog_author ?></p>
-        <time datetime="<?php echo $blog_date_c ?>">
-          <?php echo $blog_date ?>
-        </time>
-        
-        <!-- Location -->   
-        <p><?php echo $blog_address ?></p>
-        <p class="lat"><?php echo $blog_lat ?></p>
-        <p class="lng"><?php echo $blog_lng ?></p>
+        <div id="infotext">
+            <!-- Title, URL -->
+            <a href="<?php echo $blog_url ?>">
+                <h2 class="caption"><?php echo $blog_title ?></h2>
+            </a>
 
-        <!-- Actual Text of blog-->
-        <p><?php echo $blog_text ?></p>
+            <!-- User Avatar Image (won't be displayed, but needs to be first img here --> 
+            <img class="user_avatar" src="<?php echo $blog_avatar ?>" alt="" style="display: none;">
+
+            <!-- Author and Date -->
+            <p><?php echo $blog_author ?></p>
+            <time datetime="<?php echo $blog_date_c ?>">
+              <?php echo $blog_date ?>
+            </time>
+
+            <!-- Location -->   
+            <p><?php echo $blog_address ?></p>
+            <p class="lat"><?php echo $blog_lat ?></p>
+            <p class="lng"><?php echo $blog_lng ?></p>
+
+            <!-- Actual Text of blog-->
+            <p><?php echo $blog_text ?></p>
+        </div>
     </div>
 
 <?php endforeach ?>

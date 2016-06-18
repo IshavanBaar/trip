@@ -1,113 +1,188 @@
-/* -------------------- INITIALIZING VARIABLES & STYLE ----------- */
 var map;
-var markers = [];
+var latlngBounds; 
+var markers = new Array();
 var prevPosition = {};
 var curPosition = {};
-var infowindow; 
+var infoWindow; 
 
-// Style from https://snazzymaps.com/style/8409/white-and-black
-var mapStyle = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"weight":"2.05"},{"color":"#ffffff"}]},{"featureType":"administrative.country","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#6f6f6f"}]},{"featureType":"administrative.country","elementType":"labels.text","stylers":[{"weight":"1"}]},{"featureType":"administrative.country","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"administrative.province","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.neighborhood","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"simplified"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":17},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]}];
- 
-
-/* -------------------- INITIALIZING MAP ------------------------- */
-
+// Initialize map
 function initMap() {
-    
-    // TODO select with jquery.
+    // Initialize elements
     var mapDiv = document.getElementById('map');
-
-    // Map
     map = new google.maps.Map(mapDiv, {
-      // TODO set center dynamically 
-      center: {lat: -16.4472837, lng: 145.8173498}, // Great Barrier Reef
-      zoom: 4,
+      center: {lat: 0, lng: 0},
+      zoom: 0,
       styles: mapStyle
     }); 
-    
 
-    // Sizes of infowindow.
-    var width = $('#infowindow_measure').width();
-    var height = $('#map').height() - 500; // TODO find better height
+    infoWindow = new google.maps.InfoWindow();
+    latlngBounds = new google.maps.LatLngBounds();
     
-    // Info window
-    infowindow = new google.maps.InfoWindow({
-            width : width,    
-            height: height,
-            pixelOffset: new google.maps.Size(width/2, height/2),
-            zIndex: 1
-    });
+    // Drop markers
+    drawBlogs();
     
-    // Some delay before the map has been loaded.
-    window.setTimeout(drop, 3000);
+    // Change default style of infowindow
+    changeInfoWindowStyle();
+    
+    // Recenter
+    map.fitBounds(latlngBounds);
 }
 
-/* -------------------- ADDING MARKERS TO THE MAP ------------------ */
-
-function drop() {
-    $('.infowindow').each(function(index, value){
-        // Get the HTML content with a clone
-        var clone = $(this).clone().css('display','inline-block');
-        var infowindowContent = $('<div/>').append(clone).html();
+// For each blog, gets required content and draws on map
+function drawBlogs() {
+    $('.infowindow-content').each(function(index, value) {
+        // Display 
+        var infoWindowHTML = $(this).css('display','inline-block');
         
-        // Search for user avatar
-        var markerIcon = clone.find('.user_avatar').css('display','inline-block').attr('src');
+        // Get content
+        var markerIcon = infoWindowHTML.find('.user_avatar').css('display','inline-block').attr('src');
+        var latitude = infoWindowHTML.find('.lat').text();
+        var longitude = infoWindowHTML.find('.lng').text();
         
-        // Search for positions
-        var latitude = clone.find('.lat').text();
-        var longitude = clone.find('.lng').text();
+        // Extract window content and position.
+        var infoWindowContent = $('<div/>').append(infoWindowHTML).html();
         var position = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
+        latlngBounds.extend(position);
         
-        addMarkerWithTimeout(position, index * 1000, infowindowContent, markerIcon);
+        // Draw marker and line on the map with a timeout
+        window.setTimeout(function() {
+            drawMarker(markerIcon, position, infoWindowContent);
+            drawLine(position);
+        }, 1500 + index * 1000);
     });
 }
 
-function addMarkerWithTimeout(position, timeout, infowindowContent, markerIcon) {
-    window.setTimeout(function() {
-        
-        // Add marker
-        var marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            icon : markerIcon, 
-            animation: google.maps.Animation.DROP
-        });
-        
-        // Add info window on click event
-        marker.addListener('click', function() {
-            infowindow.setContent(infowindowContent);
-            infowindow.open(map, marker);
-        });
-  
-        markers.push(marker);
-        
-        // Add line segment
-        curPosition = position;
-        
-        // TODO make it also appear gradually
-        if (!$.isEmptyObject(prevPosition)) {
-            var lineSymbol = {
-              path: 'M 0,-1 0,1',
-              geodesic: true,
-              strokeColor: '#FF0000',
-              strokeOpacity: 1,
-              scale: 4
-            };
-            
-            var route = new google.maps.Polyline({
-                path: [prevPosition, curPosition],
-                geodesic: true,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0,
-                
-                icons: [{
-                    icon: lineSymbol,
-                    offset: '0',
-                    repeat: '20px'
-                }]
-            });
-            route.setMap(map);
-        }
-        prevPosition = curPosition;
+// Draws markers on map
+function drawMarker(markerIcon, position, infowindowContent) {
+    var image = {
+        url: markerIcon,
+        anchor: new google.maps.Point(20, 20)
+    };
+    
+    // Add marker
+    var marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        icon : image, 
+        animation: google.maps.Animation.DROP,
+        zIndex: 9
+    });
+    
+    
+    markers.push(marker);
 
-    }, timeout);
+    marker.addListener('click', function() {
+        // Unselect all markers
+        for (var i = 0; i < markers.length; i++) {
+            selectIcon(markers[i], false); 
+        }
+        
+        // Close infowindow if already open for this marker
+        if(infoWindow.marker === marker && infoWindow.getMap() !== null && typeof infoWindow.getMap() !== "undefined") {
+            infoWindow.close();
+        } 
+        else {
+            // Select this marker icon
+            selectIcon(marker, true);
+            
+            // Adjust center (no overlap with infowindow)
+            map.setCenter(marker.getPosition());
+
+            // Set infowindow content.
+            infoWindow.marker = marker;
+            infoWindow.setContent(infowindowContent);
+            infoWindow.open(map);
+        }
+    });
 }
+
+// Draws lines on map from current position position.
+function drawLine(position) {
+    curPosition = position;
+
+    // TODO make it also appear gradually
+    if (!$.isEmptyObject(prevPosition)) {
+        var lineSymbol = {
+          path: 'M 0,-1 0,1',
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1,
+          scale: 4
+        };
+
+        var route = new google.maps.Polyline({
+            path: [prevPosition, curPosition],
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0,
+            icons: [{
+                icon: lineSymbol,
+                offset: '0',
+                repeat: '20px'
+            }],
+            map: map
+        });
+    }
+    prevPosition = curPosition;
+}
+
+function changeInfoWindowStyle() {
+    google.maps.event.addListener(infoWindow, 'domready', function() {
+        // Change height TODO does not work in chrome
+        changeToScreenHeight();
+        
+        var iwOuter = $('.gm-style-iw');
+        var iwBackground = iwOuter.prev();
+
+        // Remove the background shadow and white background
+        iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+        iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+        
+        // Removes the arrow and its shadow
+        iwBackground.children(':nth-child(1)').css({'display' : 'none'});
+        iwBackground.children(':nth-child(3)').css({'display' : 'none'});
+        
+        // Reposition and style close button
+        var iwCloseBtn = iwOuter.next();
+        iwCloseBtn.find('img').remove();
+        iwCloseBtn.append("<span>CLOSE</span>");
+        iwCloseBtn.css({
+            width: '40px',
+            right: '25px', 
+            top: '13px',
+            position: 'fixed',
+        });
+    });
+    
+    // On close, change marker.
+    google.maps.event.addListener(infoWindow, 'closeclick', function() {
+        var markerIcon = infoWindow.marker.getIcon();
+        infoWindow.marker.setIcon(markerIcon.replace("-selected",""));
+    });
+}
+
+function changeToScreenHeight() {
+    var height = $(window).height(); 
+    $('.infowindow-content').css({'height': '' + height + 'px'});
+    
+    var width = $(window).width() / 12 * 5;
+    $('.infowindow-content').css({'width': '' + width + 'px'});
+}
+
+function selectIcon(marker, select) {
+    var oldURL = marker.getIcon().url;
+    var newURL = oldURL.replace("-selected","");
+    var anchor = new google.maps.Point(20,20);
+    
+    if (select === true) {
+        newURL = oldURL.replace(".png","") + "-selected.png";
+        anchor = new google.maps.Point(30,30);
+    }
+    
+    var newIcon = {url: newURL, anchor: anchor};
+    marker.setIcon(newIcon);
+}
+
+$(window).resize(function() {
+    changeToScreenHeight();
+});

@@ -1,9 +1,36 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 #map {
-    height: 100%; 
-    width: 100%; 
-    position:absolute; 
-    top: 0; 
-    left: 0; 
+    height: 100%;
     z-index: 0;
 }
+
+.infowindow-content {
+    padding: 10px;
+    top: 0px;
+    right: 0px;
+    background-color: #D3D3D3;
+    position: fixed;
+    overflow: auto;
+    z-index: 999;
+}
+
+.infowindow-content img {
+    max-width: 100%;
+}
+
+.gm-style-iw {
+    /* width: 350px !important;*/
+    top: 0 !important;
+    left: 0 !important;
+}
+/*
+.gm-style-iw img {
+    max-width: 100%;
+}*/
+
 
