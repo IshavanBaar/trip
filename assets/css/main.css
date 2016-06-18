@@ -9,20 +9,28 @@ html, body {
     z-index: 0;
 }
 
+.infowindow-content {
+    padding: 10px;
+    top: 0px;
+    right: 0px;
+    background-color: #D3D3D3;
+    position: fixed;
+    overflow: auto;
+    z-index: 999;
+}
+
+.infowindow-content img {
+    max-width: 100%;
+}
+
 .gm-style-iw {
     /* width: 350px !important;*/
     top: 0 !important;
     left: 0 !important;
 }
-
+/*
 .gm-style-iw img {
     max-width: 100%;
-}
+}*/
 
-.infowindow {
-    /*position: fixed;*/
-    /*width: 500px;*/
-    /*padding: 10px;*/
-    background-color: #D3D3D3; /* for now */
-    z-index: 5;
-}
+
