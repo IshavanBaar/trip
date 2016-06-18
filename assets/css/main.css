@@ -10,7 +10,6 @@ html, body {
 }
 
 .infowindow-content {
-    padding: 10px;
     top: 0px;
     right: 0px;
     background-color: #D3D3D3;
@@ -19,18 +18,36 @@ html, body {
     z-index: 999;
 }
 
-.infowindow-content img {
-    max-width: 100%;
-}
-
 .gm-style-iw {
     /* width: 350px !important;*/
     top: 0 !important;
     left: 0 !important;
 }
-/*
-.gm-style-iw img {
-    max-width: 100%;
-}*/
 
+@font-face {
+    font-family: 'YourFontName'; /*a name to be used later*/
+    src: url('../fonts/London-Tube.ttf'); /*URL to font*/
+}
+
+/* Styling of blog elements */
+.infowindow-content h1, h2, h3 {
+    font-family: 'YourFontName';
+    font-weight: bold;
+}
+
+.infowindow-content p, h1, h2, h3 {
+    padding: 10px;
+}
+
+.infowindow-content ul {
+    list-style-type:disc;
+}
+
+.infowindow-content .blog-date-address {
+    font-style: italic
+}
+
+.infowindow-content img {
+    max-width: 100%;
+}
 
