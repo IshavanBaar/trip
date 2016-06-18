@@ -54,30 +54,36 @@ function drawBlogs() {
 
 // Draws markers on map
 function drawMarker(markerIcon, position, infowindowContent) {
+    var image = {
+        url: markerIcon,
+        anchor: new google.maps.Point(20, 20)
+    };
+    
     // Add marker
     var marker = new google.maps.Marker({
         position: position,
         map: map,
-        icon : markerIcon, 
-        animation: google.maps.Animation.DROP
+        icon : image, 
+        animation: google.maps.Animation.DROP,
+        zIndex: 9
     });
+    
+    
     markers.push(marker);
 
     marker.addListener('click', function() {
         // Unselect all markers
         for (var i = 0; i < markers.length; i++) {
-            var markerIcon =  markers[i].getIcon();
-            markers[i].setIcon(markerIcon.replace("-selected",""));
+            selectIcon(markers[i], false); 
         }
         
-        // If infowindow for this marker is already open, close it
+        // Close infowindow if already open for this marker
         if(infoWindow.marker === marker && infoWindow.getMap() !== null && typeof infoWindow.getMap() !== "undefined") {
             infoWindow.close();
         } 
-        // If not, change marker and open infowindow.
         else {
-            var markerIcon =  marker.getIcon();
-            marker.setIcon(markerIcon.replace(".png","") + "-selected.png");
+            // Select this marker icon
+            selectIcon(marker, true);
             
             // Adjust center (no overlap with infowindow)
             map.setCenter(marker.getPosition());
@@ -155,10 +161,6 @@ function changeInfoWindowStyle() {
     });
 }
 
-$(window).resize(function() {
-    changeToScreenHeight();
-});
-
 function changeToScreenHeight() {
     var height = $(window).height(); 
     $('.infowindow-content').css({'height': '' + height + 'px'});
@@ -166,3 +168,21 @@ function changeToScreenHeight() {
     var width = $(window).width() / 12 * 5;
     $('.infowindow-content').css({'width': '' + width + 'px'});
 }
+
+function selectIcon(marker, select) {
+    var oldURL = marker.getIcon().url;
+    var newURL = oldURL.replace("-selected","");
+    var anchor = new google.maps.Point(20,20);
+    
+    if (select === true) {
+        newURL = oldURL.replace(".png","") + "-selected.png";
+        anchor = new google.maps.Point(30,30);
+    }
+    
+    var newIcon = {url: newURL, anchor: anchor};
+    marker.setIcon(newIcon);
+}
+
+$(window).resize(function() {
+    changeToScreenHeight();
+});
