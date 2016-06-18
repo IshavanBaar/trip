@@ -35,9 +35,9 @@ function drawBlogs() {
         var infoWindowHTML = $(this).css('display','inline-block');
         
         // Get content
-        var markerIcon = infoWindowHTML.find('.user_avatar').css('display','inline-block').attr('src');
-        var latitude = infoWindowHTML.find('.lat').text();
-        var longitude = infoWindowHTML.find('.lng').text();
+        var markerIcon = infoWindowHTML.find('.blog-avatar').text();
+        var latitude = infoWindowHTML.find('.blog-lat').text();
+        var longitude = infoWindowHTML.find('.blog-lng').text();
         
         // Extract window content and position.
         var infoWindowContent = $('<div/>').append(infoWindowHTML).html();
@@ -156,8 +156,7 @@ function changeInfoWindowStyle() {
     
     // On close, change marker.
     google.maps.event.addListener(infoWindow, 'closeclick', function() {
-        var markerIcon = infoWindow.marker.getIcon();
-        infoWindow.marker.setIcon(markerIcon.replace("-selected",""));
+        selectIcon(infoWindow.marker, "false");
     });
 }
 

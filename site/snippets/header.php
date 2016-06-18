@@ -20,6 +20,9 @@
             'assets/js/mapstyles/gray-white-style.js',
             'assets/js/maps.js'
         ))?>
+        
+        <!-- FONTS -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet"> 
     </head>
 
 
