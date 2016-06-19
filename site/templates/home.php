@@ -2,6 +2,10 @@
     <body>
         <?php snippet('blogs') ?>
         
+        <div id="closeBtn" style="display: none;">&#10006;</div>
+        <div id="iWindow" style="display: none;">
+			<div id="iContent"></div>
+		</div>
         <div id="map"></div>
         
         <!-- MAPS scripts -->

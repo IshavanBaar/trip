@@ -5,6 +5,13 @@ var prevPosition = {};
 var curPosition = {};
 var infoWindow; 
 
+$( document ).ready(function() {	 
+    $( "#closeBtn" ).click(function() {
+		  $("#iWindow").toggle();
+		  $( '#closeBtn' ).toggle();
+	});
+});
+
 // Initialize map
 function initMap() {
     // Initialize elements
@@ -96,8 +103,9 @@ function drawMarker(markerIcon, position, infowindowContent) {
         }
         
         // Close infowindow if already open for this marker
-        if(infoWindow.marker === marker && infoWindow.getMap() !== null && typeof infoWindow.getMap() !== "undefined") {
-            infoWindow.close();
+        if(infoWindow.marker === marker && $('#iWindow').is(':visible')) {
+		  $('#iWindow').toggle();
+		  $('#closeBtn').toggle();
         } 
         else {
             // Select this marker icon
@@ -109,7 +117,10 @@ function drawMarker(markerIcon, position, infowindowContent) {
             // Set infowindow content.
             infoWindow.marker = marker;
             infoWindow.setContent(infowindowContent);
-            infoWindow.open(map);
+            $('#iContent').empty();
+        	$('#iContent').append(infowindowContent);
+			$('#iWindow').show();
+			$('#closeBtn').show();
         }
     });
 }
