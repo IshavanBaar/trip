@@ -6,9 +6,14 @@ var curPosition = {};
 var infoWindow; 
 
 $( document ).ready(function() {	 
+    // Close window and unselect markers
     $( "#closeBtn" ).click(function() {
-		  $("#iWindow").toggle();
-		  $( '#closeBtn' ).toggle();
+        for (var i = 0; i < markers.length; i++) {
+            selectIcon(markers[i], false); 
+        }
+        
+        $('#iWindow').toggle();
+        $('#closeBtn').toggle();
 	});
 });
 
@@ -46,9 +51,6 @@ function initMap() {
     // Drop markers
     drawBlogs();
     
-    // Change default style of infowindow
-    changeInfoWindowStyle();
-    
     // Recenter
     map.fitBounds(latlngBounds);
 }
@@ -71,8 +73,8 @@ function drawBlogs() {
         
         // Draw marker and line on the map with a timeout
         window.setTimeout(function() {
-            drawMarker(markerIcon, position, infoWindowContent);
-            drawLine(position);
+            $.when(drawMarker(markerIcon, position, infoWindowContent))
+                .then(drawLine(position));
         }, 1500 + index * 1000);
     });
 }
@@ -93,7 +95,6 @@ function drawMarker(markerIcon, position, infowindowContent) {
         zIndex: 9
     });
     
-    
     markers.push(marker);
 
     marker.addListener('click', function() {
@@ -112,11 +113,10 @@ function drawMarker(markerIcon, position, infowindowContent) {
             selectIcon(marker, true);
             
             // Adjust center (no overlap with infowindow)
-            map.setCenter(marker.getPosition());
+            map.panTo(marker.getPosition());
 
-            // Set infowindow content.
+            // Set infowindow marker
             infoWindow.marker = marker;
-            infoWindow.setContent(infowindowContent);
             $('#iContent').empty();
         	$('#iContent').append(infowindowContent);
 			$('#iWindow').show();
@@ -155,48 +155,6 @@ function drawLine(position) {
     prevPosition = curPosition;
 }
 
-function changeInfoWindowStyle() {
-    google.maps.event.addListener(infoWindow, 'domready', function() {
-        // Change height TODO does not work in chrome
-        changeToScreenHeight();
-        
-        var iwOuter = $('.gm-style-iw');
-        var iwBackground = iwOuter.prev();
-
-        // Remove the background shadow and white background
-        iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-        iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-        
-        // Removes the arrow and its shadow
-        iwBackground.children(':nth-child(1)').css({'display' : 'none'});
-        iwBackground.children(':nth-child(3)').css({'display' : 'none'});
-        
-        // Reposition and style close button
-        var iwCloseBtn = iwOuter.next();
-        iwCloseBtn.find('img').remove();
-        iwCloseBtn.append("<span>CLOSE</span>");
-        iwCloseBtn.css({
-            width: '40px',
-            right: '25px', 
-            top: '13px',
-            position: 'fixed',
-        });
-    });
-    
-    // On close, change marker.
-    google.maps.event.addListener(infoWindow, 'closeclick', function() {
-        selectIcon(infoWindow.marker, "false");
-    });
-}
-
-function changeToScreenHeight() {
-    var height = $(window).height(); 
-    $('.infowindow-content').css({'height': '' + height + 'px'});
-    
-    var width = $(window).width() / 12 * 5;
-    $('.infowindow-content').css({'width': '' + width + 'px'});
-}
-
 function selectIcon(marker, select) {
     var oldURL = marker.getIcon().url;
     var newURL = oldURL.replace("-selected","");
@@ -210,10 +168,6 @@ function selectIcon(marker, select) {
     var newIcon = {url: newURL, anchor: anchor};
     marker.setIcon(newIcon);
 }
-
-$(window).resize(function() {
-    changeToScreenHeight();
-});
 
 // Creates logo
 function CenterControl(controlDiv, map) {
@@ -229,6 +183,7 @@ function CenterControl(controlDiv, map) {
 
     // Set CSS for the control interior.
     var controlText = document.createElement('div');
+    controlText.id = 'controlText';
     controlText.style.fontFamily = 'YourFontName';
     controlText.style.fontWeight = 'bold';
     controlText.style.fontSize = '30px';
@@ -237,8 +192,12 @@ function CenterControl(controlDiv, map) {
     controlText.style.paddingRight = '5px';
     controlText.innerHTML = 'WORLD TRIP';
     controlUI.appendChild(controlText);
-
-    controlUI.addEventListener('hover', function() {
-        //nothing
+    
+    // For now, become red.
+    controlUI.addEventListener('mouseover', function() {
+        controlUI.firstElementChild.style.color = '#ff0000';
+    });
+    controlUI.addEventListener('mouseout', function() {
+        controlUI.firstElementChild.style.color = '#000000';
     });
 }
