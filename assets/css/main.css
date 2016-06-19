@@ -1,3 +1,14 @@
+/* Remove google maps logo and user terms*/
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    /*outline: #ff0000 thick;*/
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -16,12 +27,13 @@ html, body {
     position: fixed;
     overflow: auto;
     z-index: 999;
+    transform: matrix(1, 0, 0, 1, 26, 138);
 }
 
 .gm-style-iw {
     /* width: 350px !important;*/
-    top: 0 !important;
-    left: 0 !important;
+    top: 0px !important;
+    left: 0px !important;
 }
 
 @font-face {

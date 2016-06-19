@@ -10,10 +10,28 @@ function initMap() {
     // Initialize elements
     var mapDiv = document.getElementById('map');
     map = new google.maps.Map(mapDiv, {
-      center: {lat: 0, lng: 0},
-      zoom: 0,
-      styles: mapStyle
+        center: {lat: 0, lng: 0},
+        zoom: 0,
+        styles: mapStyle,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+        },
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DEFAULT,
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+        },
+        scaleControl: false,
+        streetViewControl: false,
+        fullscreenControl: false
     }); 
+    
+    // Add logo
+    var centerControlDiv = document.createElement('div');
+    var centerControl = new CenterControl(centerControlDiv, map);
+    centerControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
 
     infoWindow = new google.maps.InfoWindow();
     latlngBounds = new google.maps.LatLngBounds();
@@ -185,3 +203,31 @@ function selectIcon(marker, select) {
 $(window).resize(function() {
     changeToScreenHeight();
 });
+
+// Creates logo
+function CenterControl(controlDiv, map) {
+    // Set CSS for the control border.
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#fff';
+    controlUI.style.border = '2px solid #fff';
+    controlUI.style.borderRadius = '3px';
+    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlUI.style.marginTop = '10px';
+    controlUI.style.marginLeft = '10px';
+    controlDiv.appendChild(controlUI);
+
+    // Set CSS for the control interior.
+    var controlText = document.createElement('div');
+    controlText.style.fontFamily = 'YourFontName';
+    controlText.style.fontWeight = 'bold';
+    controlText.style.fontSize = '30px';
+    controlText.style.lineHeight = '38px';
+    controlText.style.paddingLeft = '5px';
+    controlText.style.paddingRight = '5px';
+    controlText.innerHTML = 'WORLD TRIP';
+    controlUI.appendChild(controlText);
+
+    controlUI.addEventListener('hover', function() {
+        //nothing
+    });
+}
