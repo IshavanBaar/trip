@@ -1,9 +1,101 @@
+/* Remove google maps logo and user terms*/
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    /*outline: #ff0000 thick;*/
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 #map {
-    height: 100%; 
-    width: 100%; 
-    position:absolute; 
-    top: 0; 
-    left: 0; 
+    height: 100%;
     z-index: 0;
 }
 
+.infowindow-content {
+    background-color: #D3D3D3;
+    overflow-y: auto;
+    z-index: 999;
+	width: 100%;
+}
+
+.gm-style-iw {
+    /* width: 350px !important;*/
+    top: 0 !important;
+    left: 0 !important;
+}
+
+@font-face {
+    font-family: 'YourFontName'; /*a name to be used later*/
+    src: url('../fonts/London-Tube.ttf'); /*URL to font*/
+}
+
+/* Styling of blog elements */
+.infowindow-content h1, h2, h3 {
+    font-family: 'YourFontName';
+    font-weight: bold;
+}
+
+.infowindow-content p, h1, h2, h3 {
+    padding: 10px;
+}
+
+.infowindow-content ul {
+    list-style-type:disc;
+}
+
+.infowindow-content .blog-date-address {
+    font-style: italic
+}
+
+.infowindow-content img {
+    max-width: 100%;
+}
+
+#closeBtn {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+	right: 20px;
+	top: 0px;
+	z-index: 9991;
+	position: absolute;
+	font-size: 25px;
+	color: white;
+	text-shadow: 0 1px 0 #ffffff;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+	text-decoration: none;
+}
+
+#closeBtn:hover {
+  color: white;
+  text-decoration: none;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  cursor: pointer;
+}
+
+#iWindow {
+    height: 100%;
+    width: 35%;
+    overflow: auto;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+    box-shadow: 0 1px 1px #cccccc;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: #bfbfbf;
+    z-index: 999;
+}

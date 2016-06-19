@@ -1,9 +1,12 @@
 <?php if(!defined('KIRBY')) exit ?>
 
 title: Page
-pages: true
+pages: blog
+  limit: 50
+  num:
+    mode: date
 files: false
-hide: true
+icon: folder-open
 options:
   preview: false
   status: false
@@ -14,3 +17,4 @@ fields:
   title:
     label: Title
     type:  text
+    readonly: true
