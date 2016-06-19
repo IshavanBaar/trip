@@ -3,6 +3,7 @@
 title: Blog
 pages: false
 files: true
+icon: pencil
 fields:
   title:
     label: Title

@@ -6,7 +6,7 @@ User: ish
 
 ----
 
-Main-image: cv.png
+Main-image: IMG_8146.JPG
 
 ----
 
