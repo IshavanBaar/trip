@@ -45,7 +45,7 @@ foreach($blogs as $blog):
         <img class="blog-header-image" src="<?php echo $blog_main_image ?>" alt="">
         
         <div class="text-center">
-             <!-- Title -->
+            <!-- Title -->
             <h2 class="blog-title"><?php echo $blog_title ?></h2>
 
             <img class="blog-squiggle" src="assets/images/squiggle.png" alt="">
