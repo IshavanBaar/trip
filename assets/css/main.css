@@ -21,7 +21,7 @@ html, body {
 }
 
 .infowindow-content {
-    background-color: #D3D3D3;
+    background-color: #ffffff;
     overflow-y: auto;
     z-index: 999;
 	width: 100%;
@@ -53,11 +53,38 @@ html, body {
 }
 
 .infowindow-content .blog-date-address {
-    font-style: italic
+    font-style: italic;
 }
 
 .infowindow-content img {
     max-width: 100%;
+}
+
+.infowindow-content img:not(.blog-header-image) {
+    padding-bottom: 20px;
+}
+
+.infowindow-content .previous-blog {
+    left: 0;
+}
+
+.infowindow-content .previous-blog, .next-blog {
+    color: inherit;
+    font-family: 'YourFontName';
+    font-weight: bold;
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px;
+    text-shadow: 0 1px 0 #ffffff;
+	text-decoration: none;
+}
+
+.infowindow-content .previous-blog:hover, .next-blog:hover {
+    color: #FF0000;
+    text-decoration: none;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    cursor: pointer;
 }
 
 #closeBtn {
@@ -88,14 +115,11 @@ html, body {
     height: 100%;
     width: 35%;
     overflow: auto;
-    border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
-    border-bottom: 1px solid #999;
-    border-right: 1px solid #999;
-    box-shadow: 0 1px 1px #cccccc;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
     position: absolute;
     right: 0px;
     top: 0px;
-    background-color: #bfbfbf;
+    background-color: #ffffff;
     z-index: 999;
 }

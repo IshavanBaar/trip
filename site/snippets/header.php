@@ -17,7 +17,7 @@
             'assets/js/lib/modernizr-2.8.3-respond-1.4.2.min.js',
             'assets/js/lib/jquery-1.12.3.js',
             'assets/js/lib/bootstrap.min.js',
-            'assets/js/mapstyles/gray-white-style.js',
+            'assets/js/mapstyles/gray-blue-style.js',
             'assets/js/maps.js'
         ))?>
         

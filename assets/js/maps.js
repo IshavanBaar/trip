@@ -5,16 +5,9 @@ var prevPosition = {};
 var curPosition = {};
 var infoWindow; 
 
-$( document ).ready(function() {	 
-    // Close window and unselect markers
-    $( "#closeBtn" ).click(function() {
-        for (var i = 0; i < markers.length; i++) {
-            selectIcon(markers[i], false); 
-        }
-        
-        $('#iWindow').toggle();
-        $('#closeBtn').toggle();
-	});
+// Listeners
+$( document ).ready(function() {
+    $( "#closeBtn" ).click(function() { closeWindow(); });
 });
 
 // Initialize map
@@ -58,29 +51,29 @@ function initMap() {
 // For each blog, gets required content and draws on map
 function drawBlogs() {
     $('.infowindow-content').each(function(index, value) {
-        // Display 
+        // Get content 
+        var markerUID = $(this).attr("uid");
+        var markerIcon = $(this).attr("avatar");
+        var latitude = $(this).attr("lat");
+        var longitude = $(this).attr("lng");
+        var markerPosition = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
+        
+        latlngBounds.extend(markerPosition);
+        
+        // Display
         var infoWindowHTML = $(this).css('display','inline-block');
-        
-        // Get content
-        var markerIcon = infoWindowHTML.find('.blog-avatar').text();
-        var latitude = infoWindowHTML.find('.blog-lat').text();
-        var longitude = infoWindowHTML.find('.blog-lng').text();
-        
-        // Extract window content and position.
         var infoWindowContent = $('<div/>').append(infoWindowHTML).html();
-        var position = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
-        latlngBounds.extend(position);
-        
+
         // Draw marker and line on the map with a timeout
         window.setTimeout(function() {
-            $.when(drawMarker(markerIcon, position, infoWindowContent))
-                .then(drawLine(position));
+            $.when(drawMarker(markerIcon, markerUID, markerPosition, infoWindowContent))
+                .then(drawLine(markerPosition));
         }, 1500 + index * 1000);
     });
 }
 
 // Draws markers on map
-function drawMarker(markerIcon, position, infowindowContent) {
+function drawMarker(markerIcon, markerUID, markerPosition, infoWindowContent) {
     var image = {
         url: markerIcon,
         anchor: new google.maps.Point(20, 20)
@@ -88,13 +81,15 @@ function drawMarker(markerIcon, position, infowindowContent) {
     
     // Add marker
     var marker = new google.maps.Marker({
-        position: position,
+        position: markerPosition,
         map: map,
         icon : image, 
         animation: google.maps.Animation.DROP,
         zIndex: 9
     });
     
+    marker.uid = markerUID;
+    marker.infoWindow = infoWindowContent;
     markers.push(marker);
 
     marker.addListener('click', function() {
@@ -105,24 +100,49 @@ function drawMarker(markerIcon, position, infowindowContent) {
         
         // Close infowindow if already open for this marker
         if(infoWindow.marker === marker && $('#iWindow').is(':visible')) {
-		  $('#iWindow').toggle();
-		  $('#closeBtn').toggle();
+		  $('#iWindow').toggle("fast");
+		  $('#closeBtn').toggle("slow");
         } 
         else {
-            // Select this marker icon
-            selectIcon(marker, true);
-            
-            // Adjust center (no overlap with infowindow)
-            map.panTo(marker.getPosition());
-
-            // Set infowindow marker
-            infoWindow.marker = marker;
-            $('#iContent').empty();
-        	$('#iContent').append(infowindowContent);
-			$('#iWindow').show();
-			$('#closeBtn').show();
+            openWindow(marker);
         }
     });
+}
+
+function openWindow(marker) {
+    // Select this marker icon
+    selectIcon(marker, true);
+
+    // Adjust center (no overlap with infowindow)
+    map.panTo(marker.getPosition());
+
+    // Set infowindow marker
+    infoWindow.marker = marker;
+    $('#iContent').empty();
+    $('#iContent').append(marker.infoWindow);
+    $('#iWindow').show("fast");
+    $('#closeBtn').show("slow");
+}
+
+function openPrevNextWindow(element) {
+    closeWindow();
+    
+    var uid = element.getAttribute("uid");
+    for (var i = 0; i < markers.length; i++) {
+        if(markers[i].uid === uid) {
+            openWindow(markers[i]);
+        }
+    }
+}
+
+// Close window and unselect markers
+function closeWindow() {
+    for (var i = 0; i < markers.length; i++) {
+        selectIcon(markers[i], false); 
+    }
+
+    $('#iWindow').toggle("fast");
+    $('#closeBtn').toggle("slow");
 }
 
 // Draws lines on map from current position position.
@@ -184,6 +204,7 @@ function CenterControl(controlDiv, map) {
     // Set CSS for the control interior.
     var controlText = document.createElement('div');
     controlText.id = 'controlText';
+    controlText.style.color = '#ff0000';
     controlText.style.fontFamily = 'YourFontName';
     controlText.style.fontWeight = 'bold';
     controlText.style.fontSize = '30px';
@@ -194,10 +215,10 @@ function CenterControl(controlDiv, map) {
     controlUI.appendChild(controlText);
     
     // For now, become red.
-    controlUI.addEventListener('mouseover', function() {
+    /*controlUI.addEventListener('mouseover', function() {
         controlUI.firstElementChild.style.color = '#ff0000';
     });
     controlUI.addEventListener('mouseout', function() {
         controlUI.firstElementChild.style.color = '#000000';
-    });
+    });*/
 }
