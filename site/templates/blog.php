@@ -1,4 +1,6 @@
-<?php snippet('header') ?>
+<!-- UNACCESSIBLE FOR NOW -->
+<?php go('/'); ?>
+
 <div class="main container" role="main">
     
     <!-- MAIN IMAGE -->

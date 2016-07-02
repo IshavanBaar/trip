@@ -25,6 +25,7 @@ $blogs = page('blogs')->children()->visible()->limit(200);
 foreach($blogs as $blog): 
     $blog_avatar = kirby()->urls()->avatars() . "/" . $blog->user()->avatar() . ".png";
     $blog_url = $blog->url();
+    $blog_uid = $blog->uid();
 
     $blog_title = strtoupper($blog->title()->html());
     $blog_main_image = $blog->image((string)$blog->main_image())->url();
@@ -40,7 +41,13 @@ foreach($blogs as $blog):
     $blog_lng = clean(substr($location, strpos($location, "g:") + 2));              // All to the end
     
 ?>
-    <div class="infowindow-content" style="display: none;">  
+    <div class="infowindow-content" 
+         style="display: none;"
+         uid="<?php echo $blog_uid ?>"
+         avatar="<?php echo $blog_avatar ?>"
+         lat="<?php echo $blog_lat ?>"
+         lng="<?php echo $blog_lng ?>"
+    >
         <!-- Main Image -->
         <img class="blog-header-image" src="<?php echo $blog_main_image ?>" alt="">
         
@@ -53,16 +60,31 @@ foreach($blogs as $blog):
             <!-- Date & Address -->
             <p class="blog-date-address"><?php echo $blog_date ?>, <?php echo $blog_address ?></p>
 
-            <!-- Actual Text of blog-->
+            <!-- Actual text of blog-->
             <?php echo $blog_text ?>
-
-            <!-- Items that are required, but not displayed --> 
-            <p class="blog-avatar" style="display: none;"><?php echo $blog_avatar ?></p>
-            <p class="blog-lat" style="display: none;"><?php echo $blog_lat ?></p>
-            <p class="blog-lng" style="display: none;"><?php echo $blog_lng ?></p>
         </div>
-       
         
+        <!-- Next / Prev navigation -->
+        <nav class="prev-next" role="navigation">
+            <?php if($prev = $blog->prevVisible()): ?>
+                <span class="pull-left">
+                    <p class="previous-blog" 
+                       uid="<?php echo $prev->uid(); ?>" 
+                       onclick="openPrevNextWindow(this)">
+                        &larr; PREVIOUS
+                    </p>
+                </span>
+            <?php endif ?>
+            <?php if($next = $blog->nextVisible()): ?>
+                <span class="pull-right">
+                    <p class="next-blog" 
+                       uid="<?php echo $next->uid(); ?>" 
+                       onclick="openPrevNextWindow(this)">
+                        NEXT &rarr;
+                    </p>
+                </span>
+            <?php endif ?>
+        </nav>
     </div>
 
 <?php endforeach ?>

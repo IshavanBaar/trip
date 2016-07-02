@@ -1,3 +1,4 @@
+// Style adapted from https://snazzymaps.com/style/8409/white-and-black
 var mapStyle = [
     {
         "featureType": "all",
@@ -352,7 +353,7 @@ var mapStyle = [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#7faac7"
+                "color": "#d6f0f6"
             },
             {
                 "lightness": 17
