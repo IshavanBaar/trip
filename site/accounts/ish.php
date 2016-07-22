@@ -9,6 +9,6 @@ password: >
 language: en
 role: admin
 history:
+  - blogs/another-blog
   - blogs/test
   - blogs/in-the-plane
-  - blogs/another-blog

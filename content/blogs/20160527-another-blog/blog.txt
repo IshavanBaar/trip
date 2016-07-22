@@ -12,7 +12,7 @@ It's great here in Indonesia. The people are warm. The food is delicious. All th
 
 ## Bali
 Let's check out some pics!
-(image: img_7791.jpg)
+(image: img_7791.jpg)(image: img_7497.jpg)
 
 ----
 
@@ -24,7 +24,7 @@ Location:
 
 address: melbourne
 lat: -37.814107
-lng: '144.96328'
+lng: 144.96328
 
 ----
 

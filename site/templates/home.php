@@ -7,8 +7,8 @@
 			<div id="iContent"></div>
 		</div>
         <div id="map"></div>
-        
         <!-- MAPS scripts -->
         <?php echo js('https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyBSRXd-KxP4MMM04uSk3kpO-72q380UBAc&libraries=geometry', true) ?>   
+        <?php echo js("assets/js/lib/lightbox.js")?>
     </body>
 </html>
