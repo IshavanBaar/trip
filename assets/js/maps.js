@@ -8,6 +8,7 @@ var infoWindow;
 // Listeners
 $( document ).ready(function() {
     $( "#closeBtn" ).click(function() { closeWindow(); });
+    initializeImageFullscreen();
 });
 
 // Initialize map
@@ -20,23 +21,20 @@ function initMap() {
         styles: mapStyle,
         zoomControl: true,
         zoomControlOptions: {
-            position: google.maps.ControlPosition.LEFT_TOP
+            position: google.maps.ControlPosition.LEFT_BOTTOM
         },
         mapTypeControl: true,
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.DEFAULT,
-            position: google.maps.ControlPosition.LEFT_BOTTOM
+            position: google.maps.ControlPosition.BOTTOM_LEFT
         },
         scaleControl: false,
         streetViewControl: false,
         fullscreenControl: false
     }); 
     
-    // Add logo
-    var centerControlDiv = document.createElement('div');
-    var centerControl = new CenterControl(centerControlDiv, map);
-    centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
+    // Add logo control
+    addControls();
 
     infoWindow = new google.maps.InfoWindow();
     latlngBounds = new google.maps.LatLngBounds();
@@ -46,6 +44,22 @@ function initMap() {
     
     // Recenter
     map.fitBounds(latlngBounds);
+    
+    initializeImageFullscreen();
+}
+
+function addControls() {
+    // Add logo
+    var logoControlDiv = document.createElement('div');
+    logoControlDiv.index = 1;
+    var centerControl = new LogoControl(logoControlDiv, map);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(logoControlDiv);
+    
+    // Add blog list
+    var blogListControlDiv = document.createElement('div');
+    var blogListControl = new BlogListControl(blogListControlDiv, map);
+    blogListControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(blogListControlDiv);
 }
 
 // For each blog, gets required content and draws on map
@@ -190,35 +204,79 @@ function selectIcon(marker, select) {
 }
 
 // Creates logo
-function CenterControl(controlDiv, map) {
-    // Set CSS for the control border.
+function LogoControl(controlDiv, map) {
     var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = '#fff';
-    controlUI.style.border = '2px solid #fff';
-    controlUI.style.borderRadius = '3px';
-    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-    controlUI.style.marginTop = '10px';
-    controlUI.style.marginLeft = '10px';
+    controlUI.className += 'controlUI';
+    controlDiv.appendChild(controlUI);
+    
+    var logo = document.createElement('div');
+    logo.id = 'logo';
+    logo.innerHTML = 'WORLD TRIP';
+    
+    controlUI.appendChild(logo);
+}
+
+// Creates pulldown list of blogs
+function BlogListControl(controlDiv, map) {
+    var controlUI = document.createElement('div');
+    controlUI.className += 'controlUI';
     controlDiv.appendChild(controlUI);
 
-    // Set CSS for the control interior.
-    var controlText = document.createElement('div');
-    controlText.id = 'controlText';
-    controlText.style.color = '#ff0000';
-    controlText.style.fontFamily = 'YourFontName';
-    controlText.style.fontWeight = 'bold';
-    controlText.style.fontSize = '30px';
-    controlText.style.lineHeight = '38px';
-    controlText.style.paddingLeft = '5px';
-    controlText.style.paddingRight = '5px';
-    controlText.innerHTML = 'WORLD TRIP';
-    controlUI.appendChild(controlText);
+    var pullDown = document.createElement('div');
+    pullDown.id = 'pullDown';
+    pullDown.innerHTML = '\u25B6 See all blogs';
+    controlUI.appendChild(pullDown);
     
-    // For now, become red.
-    /*controlUI.addEventListener('mouseover', function() {
-        controlUI.firstElementChild.style.color = '#ff0000';
+    var list = createBlogList();
+    controlUI.appendChild(list);
+    
+    // On click, toggle list
+    pullDown.addEventListener('click', function() {
+        if (pullDown.innerHTML === '\u25B6 See all blogs') {
+            pullDown.innerHTML = '\u25BC Hide all blogs';
+            list.style.display = 'block';
+        } else {
+            pullDown.innerHTML = '\u25B6 See all blogs';
+            list.style.display = 'none';
+        }
     });
-    controlUI.addEventListener('mouseout', function() {
-        controlUI.firstElementChild.style.color = '#000000';
-    });*/
+}
+
+function createBlogList() {
+    // Create list
+    var list = document.createElement('ul');
+    list.id = 'bloglist';
+    
+    // Fill it
+    $('.bloglist-content').each(function(index, value) {
+        var blogListItem = $(this).html();
+        list.insertAdjacentHTML('afterbegin', blogListItem);
+    });
+    return list;
+}
+
+function initializeImageFullscreen() {
+   $("img[src*='trip/content/blogs']").each(function(index, value) {
+       var image =  $(this);
+       var source = image.attr('src');
+       //var content = $('<div/>').append(image).html();
+       
+       var anchor = document.createElement('a');
+       anchor.href = source;
+       anchor.dataLightbox = "example-1"; 
+       
+       var dataLightbox = document.createAttribute("data-lightbox");       
+       dataLightbox.value = index;                          
+       anchor.setAttributeNode(dataLightbox);    
+       
+       console.log(anchor.outerHTML);
+       //destination (parent) met erin een source (child)
+       //anchor met erin een source (image)
+       //source.appendTo(destination)
+       
+       $(this).wrap(anchor.outerHTML);
+   });
+    /*<a href="imagesource" data-lightbox="example-1">
+        <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-1.jpg" alt="image-1" />
+    </a>*/
 }

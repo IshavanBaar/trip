@@ -9,13 +9,15 @@
         <!-- CSS -->
         <?php echo css(array(
             'assets/css/bootstrap.css',
-            'assets/css/main.css'
+            'assets/css/main.css',
+            'assets/css/lightbox.css'
         ))?>
         
         <!-- Modernizer, Jquery, bootstrap, maps style, and main js -->
         <?php echo js(array(
             'assets/js/lib/modernizr-2.8.3-respond-1.4.2.min.js',
             'assets/js/lib/jquery-1.12.3.js',
+            'assets/js/lib/lightbox.js',
             'assets/js/lib/bootstrap.min.js',
             'assets/js/mapstyles/gray-blue-style.js',
             'assets/js/maps.js'
