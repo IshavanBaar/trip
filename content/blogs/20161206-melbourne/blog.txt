@@ -1,0 +1,25 @@
+Title: Melbourne
+
+----
+
+Main-image: melbourne_shutterstock_rf_240745099.jpg
+
+----
+
+Blog: We'll arrive in Melbourne and rent a station wagon. We'll drive along the Great Ocean Road, go back, and then drive to Sydney and Brisbane.
+
+----
+
+User: eef
+
+----
+
+Date: 2016-12-06
+
+----
+
+Location: 
+
+address: Melbourne Australië
+lat: -37.8162789
+lng: 144.9642459

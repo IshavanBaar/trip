@@ -1,0 +1,25 @@
+Title: Brisbane
+
+----
+
+Main-image: image-579355c97fc82.jpg
+
+----
+
+Blog: After exploring the Gold Coast, we plan to take a plane to New Zealand on the 9th.
+
+----
+
+User: eef
+
+----
+
+Date: 2017-01-07
+
+----
+
+Location: 
+
+address: Brisbane
+lat: -27.4697707
+lng: 153.0251235

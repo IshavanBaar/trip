@@ -1,0 +1,25 @@
+Title: Osaka
+
+----
+
+Main-image: osaka_dotonbori_ebisu_bridge.jpg
+
+----
+
+Blog: Sayonara!
+
+----
+
+User: eef
+
+----
+
+Date: 2016-11-19
+
+----
+
+Location: 
+
+address: osaka
+lat: 34.6937378
+lng: 135.5021651

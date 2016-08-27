@@ -65,6 +65,8 @@ function addControls() {
     
     // Add blog list
     var blogListControlDiv = document.createElement('div');
+    blogListControlDiv.id = "bla";
+    blogListControlDiv.style.zIndex = 940;
     var blogListControl = new BlogListControl(blogListControlDiv, map);
     blogListControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(blogListControlDiv);
@@ -135,7 +137,6 @@ function drawBlogs() {
 
 // Draws markers on map
 function drawMarker(markerIcon, markerUID, markerPosition, infoWindowContent) {
-    console.log(markerIcon);
     var image = {
         url: markerIcon,
         anchor: new google.maps.Point(20, 20)
@@ -344,7 +345,8 @@ function wrapInLightBox(image, index) {
     image.wrap(anchor.outerHTML);
 }
 
-function addHoverListener(element, marker) {       
+function addHoverListener(element, marker) {   
+    console.log("location");
     element.hover(function(){
         if (marker.getVisible()) {
             marker.setVisible(false);
