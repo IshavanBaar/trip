@@ -46,9 +46,9 @@ var mapStyle = [
             {
                 "color": "#000000"
             },
-            {
+            /*{
                 "lightness": 20
-            }
+            }*/
         ]
     },
     {
@@ -83,7 +83,7 @@ var mapStyle = [
                 "weight": "2.05"
             },
             {
-                "color": "#ffffff"
+                "color": "#000000"
             }
         ]
     },
@@ -95,7 +95,7 @@ var mapStyle = [
                 "visibility": "on"
             },
             {
-                "color": "#6f6f6f"
+                "color": "#000000"
             }
         ]
     },
@@ -167,11 +167,11 @@ var mapStyle = [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": "#ffffff"
             },
-            {
-                "lightness": 20
-            }
+            /*{
+                "lightness": 100
+            }*/
         ]
     },
     {
@@ -227,7 +227,7 @@ var mapStyle = [
                 "color": "#000000"
             },
             {
-                "lightness": 21
+                "lightness": 100
             }
         ]
     },
@@ -353,11 +353,11 @@ var mapStyle = [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#d6f0f6"
+                "color": "#446CB3"
             },
-            {
+            /*{
                 "lightness": 17
-            },
+            },*/
             {
                 "visibility": "on"
             }

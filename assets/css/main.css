@@ -23,7 +23,6 @@ html, body {
 }
 
 .infowindow-content {
-    background-color: #ffffff;
     overflow-y: auto;
     z-index: 999;
 	width: 100%;
@@ -75,8 +74,9 @@ html, body {
     position: absolute;
     right: 0px;
     top: 0px;
-    background-color: #ffffff;
     z-index: 999;
+    background-image: url("../images/seigaiha.png");
+    background-repeat: repeat;
 }
 
 /* -----------------INFOWINDOW CONTENTS----------------- */
@@ -86,20 +86,39 @@ html, body {
     font-weight: bold;
 }
 
-.infowindow-content p, h1, h2, h3 {
-    padding: 10px;
-    margin-top: 10px !important;
-}
-
-.infowindow-content h2 {
+.infowindow-content .blog-title, .blog-date-address {
+    margin-bottom: 20px !important;
     margin-top: 20px !important;
 }
 
-.infowindow-content ul {
-    list-style-type:disc;
+.infowindow-content h2:not(.blog-title), h3, h4:not(.blog-date-address-item) {
+    padding: 10px;
+    margin: 0px !important;
 }
 
-.infowindow-content .blog-date-address {
+.infowindow-content p {
+    margin-bottom: 10px;
+}
+
+.infowindow-content .blog-rest p {
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.infowindow-content .blog-rest ul {
+    padding-left: 175px;
+    padding-right: 175px;
+    list-style-type: disc;
+}
+
+.blog-rest li {
+    display: list-item;
+}
+
+.infowindow-content .blog-date-address-item {
     /*color: #d3d3d3;*/
     display: inline;
 }
@@ -112,8 +131,18 @@ html, body {
     max-width: 100%;
 }
 
-.infowindow-content img:not(.blog-header-image) {
-    padding-bottom: 20px;
+.infowindow-content img:not(.blog-squiggle):hover {
+    border: 3px solid #ff0000;
+    border-radius: 2px;
+}
+
+.infowindow-content img:not(.blog-squiggle):not(.blog-header-image) {
+     margin-top: 20px;
+}
+
+.infowindow-content figcaption {
+    font-size: 12px;
+    font-style: italic;
 }
 
 .infowindow-content .previous-blog {
