@@ -19,7 +19,7 @@
             'assets/js/lib/jquery-1.12.3.js',
             'assets/js/lib/lightbox.js',
             'assets/js/lib/bootstrap.min.js',
-            'assets/js/mapstyles/gray-blue-style.js',
+            'assets/js/mapstyles/gray-white-style.js',
             'assets/js/maps.js'
         ))?>
         

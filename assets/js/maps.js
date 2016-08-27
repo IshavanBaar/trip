@@ -1,14 +1,18 @@
 var map;
 var latlngBounds; 
 var markers = new Array();
+var markersImages = new Array();
 var prevPosition = {};
 var curPosition = {};
 var infoWindow; 
+var numberOfBlogs;
 
 // Listeners
 $( document ).ready(function() {
     $( "#closeBtn" ).click(function() { closeWindow(); });
     initializeImageFullscreen();
+    
+   
 });
 
 // Initialize map
@@ -33,26 +37,31 @@ function initMap() {
         fullscreenControl: false
     }); 
     
-    // Add logo control
+    // Add controls and geolocations of photos.
     addControls();
+    addPhotoGeos();
 
     infoWindow = new google.maps.InfoWindow();
     latlngBounds = new google.maps.LatLngBounds();
+    numberOfBlogs = $('.infowindow-content').length;
     
     // Drop markers
     drawBlogs();
     
-    // Recenter
-    map.fitBounds(latlngBounds);
-    
-    initializeImageFullscreen();
+    // Recenter, if more than 1 blog.
+    if (numberOfBlogs > 1) {
+        map.fitBounds(latlngBounds);
+    } else {
+        map.center = markers[0].getPosition();
+        map.zoom = 3;
+    }
 }
 
 function addControls() {
     // Add logo
     var logoControlDiv = document.createElement('div');
     logoControlDiv.index = 1;
-    var centerControl = new LogoControl(logoControlDiv, map);
+    var logoControl = new LogoControl(logoControlDiv, map);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(logoControlDiv);
     
     // Add blog list
@@ -60,6 +69,36 @@ function addControls() {
     var blogListControl = new BlogListControl(blogListControlDiv, map);
     blogListControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(blogListControlDiv);
+}
+
+function addPhotoGeos() {
+    // Fill it
+    $('.geolocation-content').each(function(index, value) {
+        var listItem = $(this).children(":first");
+        var imageURL = listItem.attr("imgloc");
+        var imageLat = listItem.children(":first")[0].innerHTML;
+        var imageLoc = listItem.children(":first").next()[0].innerHTML;
+        var markerPosition = new google.maps.LatLng(parseFloat(imageLat),parseFloat(imageLoc));
+        
+        var image = {
+            url: "../images/cross-red.png",
+            anchor: new google.maps.Point(10, 10)
+        };
+
+        // Add marker
+        var marker = new google.maps.Marker({
+            position: markerPosition,
+            map: map,
+            icon : image, 
+            animation: google.maps.Animation.BOUNCE,
+            zIndex: 9
+        });
+
+        marker.imageURL = imageURL;
+        marker.setVisible(false);
+        
+        markersImages.push(marker);
+    });
 }
 
 // For each blog, gets required content and draws on map
@@ -77,12 +116,16 @@ function drawBlogs() {
         // Display
         var infoWindowHTML = $(this).css('display','inline-block');
         var infoWindowContent = $('<div/>').append(infoWindowHTML).html();
-
-        // Draw marker and line on the map with a timeout
-        window.setTimeout(function() {
-            $.when(drawMarker(markerIcon, markerUID, markerPosition, infoWindowContent))
-                .then(drawLine(markerPosition));
-        }, 1500 + index * 1000);
+        
+        if (numberOfBlogs === 1) {
+            drawMarker(markerIcon, markerUID, markerPosition, infoWindowContent);
+        }  else {
+            // Draw marker and line on the map with a timeout
+            window.setTimeout(function() {
+                $.when(drawMarker(markerIcon, markerUID, markerPosition, infoWindowContent))
+                    .then(drawLine(markerPosition));
+            }, 1500 + index * 1000);
+        }
     });
 }
 
@@ -134,7 +177,8 @@ function openWindow(marker) {
     infoWindow.marker = marker;
     $('#iContent').empty();
     $('#iContent').append(marker.infoWindow);
-    $('#iWindow').show("fast");
+    
+    $.when($('#iWindow').show("fast")).then(initializeImageFullscreen());
     $('#closeBtn').show("slow");
 }
 
@@ -256,27 +300,41 @@ function createBlogList() {
 }
 
 function initializeImageFullscreen() {
-   $("img[src*='trip/content/blogs']").each(function(index, value) {
-       var image =  $(this);
-       var source = image.attr('src');
-       //var content = $('<div/>').append(image).html();
-       
-       var anchor = document.createElement('a');
-       anchor.href = source;
-       anchor.dataLightbox = "example-1"; 
-       
-       var dataLightbox = document.createAttribute("data-lightbox");       
-       dataLightbox.value = index;                          
-       anchor.setAttributeNode(dataLightbox);    
-       
-       console.log(anchor.outerHTML);
-       //destination (parent) met erin een source (child)
-       //anchor met erin een source (image)
-       //source.appendTo(destination)
-       
-       $(this).wrap(anchor.outerHTML);
-   });
-    /*<a href="imagesource" data-lightbox="example-1">
-        <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-1.jpg" alt="image-1" />
-    </a>*/
+    $("img[src*='trip/content/blogs']").each(function(index, value) {
+        var image =  $(this);
+
+        if (!$(this).parent().is("a")) {
+            var source = image.attr('src');
+
+            var anchor = document.createElement('a');
+            anchor.href = source;
+            anchor.dataLightbox = "example-1"; 
+            
+            // Create data lightbox full image view.
+            var dataLightbox = document.createAttribute("data-lightbox");       
+            dataLightbox.value = index; 
+            anchor.setAttributeNode(dataLightbox); 
+            
+            // Include caption if there.
+            if ($(this).next().is("figcaption")) {  
+                var dataTitle = document.createAttribute("data-title");
+                dataTitle.value = $(this).next()[0].innerHTML; 
+                anchor.setAttributeNode(dataTitle); 
+            }
+            
+            $(this).wrap(anchor.outerHTML);
+            
+            // TODO on hover, show right marker.
+            $(this).on("hover", function(e){
+                console.log("here");
+                /*var url = $(this).attr('src');
+
+                for (var i = 0; i < markersImages.length; i++) {
+                    if(markersImages[i].imageURL == url) {
+                        markersImages[i].setVisible(true);
+                    }
+                }*/
+            });
+        }
+    });
 }

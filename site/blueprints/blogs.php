@@ -1,7 +1,8 @@
 <?php if(!defined('KIRBY')) exit ?>
 
 title: Page
-pages: blog
+pages: 
+  template: blog
   limit: 50
   num:
     mode: date

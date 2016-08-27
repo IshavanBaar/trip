@@ -12,7 +12,7 @@ It's great here in Indonesia. The people are warm. The food is delicious. All th
 
 ## Bali
 Let's check out some pics!
-(image: img_7791.jpg)(image: img_7497.jpg)
+(image: img_7791.jpg caption: This is a test for a caption)(image: img_7497.jpg)
 
 ----
 

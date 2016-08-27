@@ -29,7 +29,7 @@ foreach($blogs as $blog):
     
     $blog_title_lower = $blog->title()->html();
     $blog_title = strtoupper($blog->title()->html());
-    $blog_main_image = $blog->image((string)$blog->main_image())->url();
+    $blog_main_image = $blog->main_image()->toFile();
     $blog_text = $blog->blog()->kirbytext(); //->excerpt(300); //for excerpt of first 300 chars.
 
     $blog_author = $blog->user();
@@ -40,7 +40,6 @@ foreach($blogs as $blog):
     $blog_address = ucwords(get_string_between($location, 'address:', 'lat:'));     // From address to lat
     $blog_lat = clean(get_string_between($location, 'lat:', 'lng:'));               // From lat to lng
     $blog_lng = clean(substr($location, strpos($location, "g:") + 2));              // All to the end
-    
 ?>
     <div class="bloglist-content" style="display: none;">
         <li>
@@ -51,6 +50,17 @@ foreach($blogs as $blog):
             </span>
         </li>
     </div>
+    
+    <?php foreach($blog->files() as $file) :
+        if($file->exif()->location() != '') : ?>
+            <div class="geolocation-content" style="display: none;">
+                <li imgloc="<?php echo $file->url() ?>">
+                    <p class="geolocation-lat"><?php echo $file->exif()->location()->lat()?></p>
+                    <p class="geolocation-lng"><?php echo $file->exif()->location()->lng()?></p>
+                </li>
+            </div>
+        <?php endif; 
+    endforeach; ?>
 
     <div class="infowindow-content" 
          style="display: none;"
@@ -59,7 +69,7 @@ foreach($blogs as $blog):
          lat="<?php echo $blog_lat ?>"
          lng="<?php echo $blog_lng ?>">
         <!-- Main Image -->
-        <img class="blog-header-image" src="<?php echo $blog_main_image ?>" alt="">
+        <img class="blog-header-image" src="<?php echo $blog_main_image->url() ?>" alt="">
         
         <div class="text-center">
             <!-- Title -->
@@ -68,14 +78,16 @@ foreach($blogs as $blog):
             <img class="blog-squiggle" src="assets/images/squiggle-red.png" alt="">   
             
             <!-- Date & Address -->
-            <div>
-                <h4 class="blog-date-address"><?php echo $blog_date?></h4>
-                <h4 class="blog-date-address separator"> | </h4>
-                <h4 class="blog-date-address"><?php echo $blog_address?></h4>
+            <div class="blog-date-address">
+                <h4 class="blog-date-address-item"><?php echo $blog_date?></h4>
+                <h4 class="blog-date-address-item separator"> | </h4>
+                <h4 class="blog-date-address-item"><?php echo $blog_address?></h4>
             </div>    
             
-            <!-- Actual text of blog-->
-            <?php echo $blog_text ?>
+            <div class="blog-rest">
+                <!-- Actual text of blog-->
+                <?php echo $blog_text ?>
+            </div>
         </div>
         
         <!-- Next / Prev navigation -->
