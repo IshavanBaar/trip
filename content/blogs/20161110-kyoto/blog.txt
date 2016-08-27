@@ -1,0 +1,25 @@
+Title: Kyoto
+
+----
+
+Main-image: 90e22726e39f8cbe326558e0c89dee61_large.jpg
+
+----
+
+Blog: Sugoi!
+
+----
+
+User: ish
+
+----
+
+Date: 2016-11-10
+
+----
+
+Location: 
+
+address: Kyoto
+lat: 35.0116363
+lng: '135.7680294'

@@ -1,0 +1,25 @@
+Title: Hong Kong
+
+----
+
+Main-image: o-hong-kong-facebook.jpg
+
+----
+
+Blog: We'll spend 3 days here, as an extended flight change :)
+
+----
+
+User: ish
+
+----
+
+Date: 2016-10-31
+
+----
+
+Location: 
+
+address: Lan Kwai Fong
+lat: 22.2808027
+lng: 114.155736

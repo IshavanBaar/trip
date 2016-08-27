@@ -23,7 +23,7 @@ $blogs = page('blogs')->children()->visible()->limit(200);
 
 // For each blog, get the information from the fields.
 foreach($blogs as $blog): 
-    $blog_avatar = kirby()->urls()->avatars() . "/" . $blog->user()->avatar() . ".png";
+    $blog_avatar = kirby()->urls()->avatars() . "/" . $blog->user()->avatar() ;
     $blog_url = $blog->url();
     $blog_uid = $blog->uid();
     
@@ -44,6 +44,7 @@ foreach($blogs as $blog):
     <div class="bloglist-content" style="display: none;">
         <li>
             <span uid="<?php echo $blog_uid ?>" onclick="openPrevNextWindow(this)">
+                <img src="<?php echo $blog_avatar . "-small.png"?>" alt="">
                 <p class="bloglist-line bloglist-date"><?php echo $blog_date ?></p>
                 <p class="bloglist-line bloglist-separator"> | </p>
                 <p class="bloglist-line bloglist-title"><?php echo $blog_title_lower ?></p>
@@ -65,7 +66,7 @@ foreach($blogs as $blog):
     <div class="infowindow-content" 
          style="display: none;"
          uid="<?php echo $blog_uid ?>"
-         avatar="<?php echo $blog_avatar ?>"
+         avatar="<?php echo $blog_avatar . ".png"?>"
          lat="<?php echo $blog_lat ?>"
          lng="<?php echo $blog_lng ?>">
         <!-- Main Image -->

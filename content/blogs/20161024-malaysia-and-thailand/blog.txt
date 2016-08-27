@@ -1,0 +1,25 @@
+Title: Malaysia and Thailand
+
+----
+
+Main-image: tf73697.jpg
+
+----
+
+Blog: We'll go through Malaysia to Thailand, up to Bangkok. Our flight from Bangkok to Hong Kong will be on **31/10/2016**.
+
+----
+
+User: eef
+
+----
+
+Date: 2016-10-24
+
+----
+
+Location: 
+
+address: Bangkok
+lat: 13.7563309
+lng: 100.5017651

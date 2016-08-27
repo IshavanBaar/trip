@@ -1,0 +1,25 @@
+Title: South Island
+
+----
+
+Main-image: christchurch.jpg
+
+----
+
+Blog: We'll arrive in Christchurch and see both islands with the (link: http://travels.kilroyworld.nl/tour/kea/65288/20757 text: KEA buss tour). This will take 15 days.
+
+----
+
+User: ish
+
+----
+
+Date: 2017-01-09
+
+----
+
+Location: 
+
+address: Christchurch
+lat: -43.5320544
+lng: 172.6362254

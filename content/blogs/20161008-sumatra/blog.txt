@@ -1,0 +1,29 @@
+Title: Sumatra
+
+----
+
+Main-image: toba-lake.jpg
+
+----
+
+Blog: In Sumatra we'll travel from Padang to Medan, for about 1.5 weeks. From there we plan to take a flight to Penang, Malaysia.
+
+----
+
+User: ish
+
+----
+
+Location: 
+
+address: Lake Toba
+lat: 2.7860786
+lng: 98.6160674
+
+----
+
+Date: 2016-10-08
+
+----
+
+Written-on: 2016-05-25

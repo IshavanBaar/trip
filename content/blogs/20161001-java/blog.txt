@@ -1,0 +1,29 @@
+Title: Java
+
+----
+
+User: eef
+
+----
+
+Main-image: 10_1000x670.jpg
+
+----
+
+Location: 
+
+address: Mount Bromo
+lat: -7.941667
+lng: 112.95
+
+----
+
+Blog: In Java, we'll visit the Bromo volcano, Yogyakarta, Bandung and Jakarta.
+
+----
+
+Date: 2016-10-01
+
+----
+
+Written-on: 2016-05-18

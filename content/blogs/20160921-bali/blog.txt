@@ -1,0 +1,29 @@
+Title: Bali
+
+----
+
+Main-image: bali-temple.jpg
+
+----
+
+Blog: We'll arrive in Bali, stay around 10 days, and go to Java and Sumatra. We'll mostly take public transport.
+
+----
+
+User: ish
+
+----
+
+Location: 
+
+address: Denpasar
+lat: -8.6704582
+lng: 115.2126293
+
+----
+
+Date: 2016-09-21
+
+----
+
+Written-on: 2016-05-17

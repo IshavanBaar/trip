@@ -1,0 +1,25 @@
+Title: Tokyo
+
+----
+
+Main-image: tokyo-shinjuku.jpg
+
+----
+
+Blog: Konnichiwa! We'll arrive in Tokyo, and take the train to Kyoto and Osaka.
+
+----
+
+User: eef
+
+----
+
+Date: 2016-11-04
+
+----
+
+Location: 
+
+address: tokyo
+lat: 35.6894875
+lng: 139.6917064

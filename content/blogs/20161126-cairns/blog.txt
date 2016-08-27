@@ -1,0 +1,25 @@
+Title: Cairns
+
+----
+
+Main-image: tmp_10293-2016-07-23-13-23-37-1535707830-1535707830.jpg
+
+----
+
+Blog: We'll stay in Cairns to see the Great Barrier Reef and the surroundings.
+
+----
+
+User: ish
+
+----
+
+Date: 2016-11-26
+
+----
+
+Location: 
+
+address: Cairns
+lat: -16.9185514
+lng: 145.7780548

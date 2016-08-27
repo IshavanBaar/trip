@@ -9,10 +9,8 @@ var numberOfBlogs;
 
 // Listeners
 $( document ).ready(function() {
-    $( "#closeBtn" ).click(function() { closeWindow(); });
-    initializeImageFullscreen();
-    
-   
+    $("#closeBtn").click(function() { closeWindow(); });
+    initializeImages();
 });
 
 // Initialize map
@@ -55,6 +53,7 @@ function initMap() {
         map.center = markers[0].getPosition();
         map.zoom = 3;
     }
+
 }
 
 function addControls() {
@@ -66,6 +65,8 @@ function addControls() {
     
     // Add blog list
     var blogListControlDiv = document.createElement('div');
+    blogListControlDiv.id = "bla";
+    blogListControlDiv.style.zIndex = 940;
     var blogListControl = new BlogListControl(blogListControlDiv, map);
     blogListControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(blogListControlDiv);
@@ -81,7 +82,7 @@ function addPhotoGeos() {
         var markerPosition = new google.maps.LatLng(parseFloat(imageLat),parseFloat(imageLoc));
         
         var image = {
-            url: "../images/cross-red.png",
+            url: window.location.href + "assets/images/close-red-small.png",
             anchor: new google.maps.Point(10, 10)
         };
 
@@ -90,9 +91,14 @@ function addPhotoGeos() {
             position: markerPosition,
             map: map,
             icon : image, 
-            animation: google.maps.Animation.BOUNCE,
             zIndex: 9
         });
+        
+        // Only bounce for first second
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+          marker.setAnimation(null);
+        }, 1350);
 
         marker.imageURL = imageURL;
         marker.setVisible(false);
@@ -178,7 +184,7 @@ function openWindow(marker) {
     $('#iContent').empty();
     $('#iContent').append(marker.infoWindow);
     
-    $.when($('#iWindow').show("fast")).then(initializeImageFullscreen());
+    $.when($('#iWindow').show("fast")).then(initializeImages());
     $('#closeBtn').show("slow");
 }
 
@@ -299,42 +305,53 @@ function createBlogList() {
     return list;
 }
 
-function initializeImageFullscreen() {
+function initializeImages() {
     $("img[src*='trip/content/blogs']").each(function(index, value) {
-        var image =  $(this);
-
-        if (!$(this).parent().is("a")) {
-            var source = image.attr('src');
-
-            var anchor = document.createElement('a');
-            anchor.href = source;
-            anchor.dataLightbox = "example-1"; 
-            
-            // Create data lightbox full image view.
-            var dataLightbox = document.createAttribute("data-lightbox");       
-            dataLightbox.value = index; 
-            anchor.setAttributeNode(dataLightbox); 
-            
-            // Include caption if there.
-            if ($(this).next().is("figcaption")) {  
-                var dataTitle = document.createAttribute("data-title");
-                dataTitle.value = $(this).next()[0].innerHTML; 
-                anchor.setAttributeNode(dataTitle); 
+        var image = $(this);
+        
+        // Initialize image full screen
+        if (!image.parent().is("a")) {
+            wrapInLightBox(image, index);
+        }
+        
+        // Initialize image listeners, if any.
+        var source = image.attr('src');
+        for (var i = 0; i < markersImages.length; i++) {
+            if(markersImages[i].imageURL == source) {
+                addHoverListener(image, markersImages[i]);
             }
-            
-            $(this).wrap(anchor.outerHTML);
-            
-            // TODO on hover, show right marker.
-            $(this).on("hover", function(e){
-                console.log("here");
-                /*var url = $(this).attr('src');
+        }
+    });
+}
 
-                for (var i = 0; i < markersImages.length; i++) {
-                    if(markersImages[i].imageURL == url) {
-                        markersImages[i].setVisible(true);
-                    }
-                }*/
-            });
+function wrapInLightBox(image, index) {
+    var source = image.attr('src');
+    var anchor = document.createElement('a');
+    anchor.href = source;
+    anchor.dataLightbox = "example-1"; 
+
+    // Create data lightbox full image view.
+    var dataLightbox = document.createAttribute("data-lightbox");       
+    dataLightbox.value = index; 
+    anchor.setAttributeNode(dataLightbox); 
+
+    // Include caption if there.
+    if (image.next().is("figcaption")) {  
+        var dataTitle = document.createAttribute("data-title");
+        dataTitle.value = image.next()[0].innerHTML; 
+        anchor.setAttributeNode(dataTitle); 
+    }
+
+    image.wrap(anchor.outerHTML);
+}
+
+function addHoverListener(element, marker) {   
+    console.log("location");
+    element.hover(function(){
+        if (marker.getVisible()) {
+            marker.setVisible(false);
+        } else {
+            marker.setVisible(true);
         }
     });
 }
